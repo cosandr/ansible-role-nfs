@@ -13,6 +13,8 @@
   ansible.builtin.copy:
     content: "{{ item.item.value }}\n"
     dest: "{{ item.item.path }}"
+    # OSError: [Errno 18] Invalid cross-device link
+    unsafe_writes: true
     owner: root
     group: root
     mode: 0644
