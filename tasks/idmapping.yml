@@ -1,0 +1,33 @@
+---
+
+- name: Check if runtime NFS idmapping parameters exist
+  ansible.builtin.stat:
+    path: "{{ item.path }}"
+  loop: "{{ __nfs_param_map }}"
+  loop_control:
+    label: "{{ item.path }}"
+  register: __nfs_idmap_check
+
+- name: Set runtime NFS idmapping parameters
+  diff: false
+  ansible.builtin.copy:
+    content: "{{ item.item.value }}\n"
+    dest: "{{ item.item.path }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ __nfs_idmap_check.results }}"
+  loop_control:
+    label: "{{ item.item.path }}={{ item.item.value }}"
+  when:
+    - item.stat.exists
+    - item.stat.writeable
+  notify: Reload NFSv4 idmapping
+
+- name: Configure permanent idmapping parameters
+  ansible.builtin.template:
+    src: nfs.conf.j2
+    dest: /etc/modprobe.d/nfs.conf
+    owner: root
+    group: root
+    mode: 0644

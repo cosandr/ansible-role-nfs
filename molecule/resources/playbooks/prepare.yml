@@ -1,0 +1,20 @@
+---
+
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Update cache and install sudo
+      ansible.builtin.package:
+        name: sudo
+        update_cache: true
+        state: present
+
+    - name: Ensure /etc/modprobe.d exists
+      ansible.builtin.file:
+        path: /etc/modprobe.d
+        state: directory
+        owner: root
+        group: root
+        mode: 0755

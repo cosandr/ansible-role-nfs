@@ -1,0 +1,7 @@
+---
+
+- name: Reload NFS shares
+  ansible.builtin.command: exportfs -ar
+
+- name: Reload NFSv4 idmapping
+  ansible.builtin.command: nfsidmap -c

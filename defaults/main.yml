@@ -1,0 +1,12 @@
+---
+
+nfs_shares: []
+nfs_idmapping_configure: true
+nfs_idmapping_client: false
+nfs_idmapping_server: false
+
+__nfs_param_map:
+  - path: /sys/module/nfs/parameters/nfs4_disable_idmapping
+    value: "{{ 'N' if nfs_idmapping_client else 'Y' }}"
+  - path: /sys/module/nfsd/parameters/nfs4_disable_idmapping
+    value: "{{ 'N' if nfs_idmapping_server else 'Y' }}"

@@ -1,0 +1,2 @@
+options nfs nfs4_disable_idmapping={{ '0' if nfs_idmapping_client else '1' }}
+options nfsd nfs4_disable_idmapping={{ '0' if nfs_idmapping_server else '1' }}

@@ -1,0 +1,30 @@
+---
+
+- name: Configure NFS shares
+  ansible.builtin.blockinfile:
+    path: /etc/exports
+    content: "{{ lookup('template', 'exports.j2') }}"
+  when: nfs_shares | length > 0
+  notify: Reload NFS shares
+
+- name: Install nfs-utils
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: present
+  when: nfs_shares | length > 0
+
+- name: Enable and start NFS server
+  ansible.builtin.systemd:
+    name: nfs-server.service
+    state: started
+    enabled: true
+  when: nfs_shares | length > 0
+  tags: ["molecule-notest"]
+
+- name: Include idmapping tasks
+  ansible.builtin.include_tasks:
+    file: idmapping.yml
+    apply:
+      tags: ["idmapping"]
+  tags: ["idmapping"]
+  when: nfs_idmapping_configure

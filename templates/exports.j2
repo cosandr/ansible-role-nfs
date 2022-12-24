@@ -1,0 +1,4 @@
+{% for s in nfs_shares %}
+{{ s.path }}{% for h in s.sources %} {{ h }}({{ s.options }}){% endfor %}
+
+{% endfor %}

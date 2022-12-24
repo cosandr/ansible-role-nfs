@@ -1,0 +1,15 @@
+---
+
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    nfs_shares:
+      - path: /mnt
+        options: "rw,no_root_squash"
+        sources:
+          - "10.1.1.1"
+          - "10.1.1.2"
+          - "10.1.1.3"
+  roles:
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
