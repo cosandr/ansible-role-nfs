@@ -8,6 +8,8 @@
 
 | OS Family | Distribution  | Latest | Supported Version(s) | Comment |
 |-----------|---------------|--------|----------------------|---------|
+| Archlinux | Archlinux     | :heavy_check_mark: | N/A | |
+| Debian    | Debian        | :heavy_check_mark: | 11 | |
 | RedHat    | RHEL          | :heavy_check_mark: | 9 | |
 |           | RockyLinux    | :heavy_check_mark: | 8, 9 | |
 |           | AlmaLinux     | :heavy_check_mark: | 8, 9 | |
@@ -25,6 +27,7 @@ Ansible 2.12 or higher.
 | `nfs_idmapping_configure` | true | Set to false to disable idmapping config |
 | `nfs_idmapping_client` | false | Set to true to enable NFS client idmapping |
 | `nfs_idmapping_server` | false | Set to true to enable NFS server idmapping |
+| `nfs_install` | false | This value defaults to true if `nfs_shares` is not empty |
 
 
 ## Dependencies

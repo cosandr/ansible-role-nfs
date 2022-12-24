@@ -1,0 +1,28 @@
+---
+
+- name: Install nfs-utils (RedHat)
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install nfs-utils (Archlinux)
+  community.general.pacman:
+    name: nfs-utils
+    state: present
+  when: ansible_os_family == 'Archlinux'
+
+- name: Install NFS packages (Debian)
+  ansible.builtin.apt:
+    name:
+      - nfs-common
+      - nfs-kernel-server
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Enable and start NFS server
+  ansible.builtin.systemd:
+    name: nfs-server.service
+    state: started
+    enabled: true
+  tags: ["molecule-notest"]

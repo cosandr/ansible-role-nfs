@@ -4,6 +4,7 @@ nfs_shares: []
 nfs_idmapping_configure: true
 nfs_idmapping_client: false
 nfs_idmapping_server: false
+nfs_install: "{{ nfs_shares | length > 0 }}"
 
 __nfs_param_map:
   - path: /sys/module/nfs/parameters/nfs4_disable_idmapping
