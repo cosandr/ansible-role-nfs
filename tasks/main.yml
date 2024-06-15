@@ -1,12 +1,5 @@
 ---
 
-- name: Configure NFS shares
-  ansible.builtin.blockinfile:
-    path: /etc/exports
-    content: "{{ lookup('template', 'exports.j2') }}"
-  when: nfs_shares | length > 0
-  notify: Reload NFS shares
-
 - name: Include installation tasks
   ansible.builtin.include_tasks:
     file: install.yml
@@ -16,6 +9,13 @@
   when:
     - ansible_os_family is defined
     - nfs_install
+
+- name: Configure NFS shares
+  ansible.builtin.blockinfile:
+    path: /etc/exports
+    content: "{{ lookup('template', 'exports.j2') }}"
+  when: nfs_shares | length > 0
+  notify: Reload NFS shares
 
 - name: Include idmapping tasks
   ansible.builtin.include_tasks:
