@@ -1,4 +1,4 @@
 {% for s in nfs_shares %}
-{{ s.path }}{% for h in s.sources %} {{ h }}({{ s.options }}){% endfor %}
+{{ s.path }}{% for h in s.sources %} {{ h }}({{ s.options }}{% if s.gen_uuid %},fsid={{ (h + s.path) | to_uuid }}{% endif %}){% endfor %}
 
 {% endfor %}
